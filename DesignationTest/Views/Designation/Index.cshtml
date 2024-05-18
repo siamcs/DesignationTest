@@ -1,0 +1,94 @@
+﻿@model DesignationTest.ViewModel.VmDesignation
+@{
+    ViewData["Title"] = "Index";
+    var BV = Model.Id > 0 ? "Update" : "Add";
+    var listEmployee = ViewData["EmployeeList"] as List<DesignationTest.Models.Designation>;
+}
+
+<form id="form" asp-controller="Designation" asp-action="Index" method="post">
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <input type="hidden" asp-for="Id" />
+
+                <div class="form-group">
+                    <label asp-for="DesignationId">ID</label>
+                    <input type="text" class="form-control" asp-for="DesignationId" placeholder="Enter ID"  />
+                    <span asp-validation-for="DesignationId" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="DesignationName">Emp Name</label>
+                    <input type="text" class="form-control" asp-for="DesignationName" placeholder="Enter Name" />
+                    <span asp-validation-for="DesignationName" class="text-danger"></span>
+                </div>
+
+                <div class="form-group">
+                    <label asp-for="CreateDate">Create Date</label>
+                    <input type="datetime-local" class="form-control" asp-for="CreateDate" />
+                    <span asp-validation-for="CreateDate" class="text-danger"></span>
+                </div>
+                <div class="form-group mx-0">
+                 
+                   
+                    <label asp-for="ModifiedDate">Last Update</label>
+                    <input type="datetime-local" class="form-control" asp-for="ModifiedDate" />
+                    <span asp-validation-for="ModifiedDate" class="text-danger"></span>
+                
+                </div>
+                <h>Create Date</h>
+                <div>@Model.CreateDate</div>
+            </div>
+          
+            <div class="col-6">
+                <div class="form-group my-6">
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <br />
+                    <h>Modified Date</h>
+                    <div>@Model.ModifiedDate</div>
+                </div>
+             </div>
+            <div>
+                <button type="submit" class="btn btn-primary">@BV</button>
+                <a asp-action="Index" class="btn btn-primary">Reset</a>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<br />
+<br />
+<h1 style="text-align:center">Employee Table</h1>
+
+<div class="container">
+    <table class="table table-bordered table-active">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Create</th>
+                <th>Modified Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in listEmployee)
+            {
+                <tr>
+                    <td>@item.DesignationId</td>
+                    <td>@item.DesignationName.ToUpper()</td>
+                    <td>@item.CreateDate</td>
+                    <td>@item.ModifiedDate</td>
+                    <td>
+                        <a class="btn btn-primary" asp-action="Index" asp-route-id="@item.Id">Edit</a>
+                        <a class="btn btn-danger" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
